@@ -139,13 +139,6 @@
         </dependency>
     </dependencies>
 
-<!--    &lt;!&ndash; This is necessary because de gpg plugin is kind messy for a macOS dev using Travis ... &ndash;&gt;-->
-<!--    <pluginRepositories>-->
-<!--        <pluginRepository>-->
-<!--            <id>apache.snapshots</id>-->
-<!--            <url>http://repository.apache.org/snapshots/</url>-->
-<!--        </pluginRepository>-->
-<!--    </pluginRepositories>-->
 
     <profiles>
         <profile>
@@ -179,23 +172,6 @@
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
-
-<!--                    &lt;!&ndash; This is necessary because gpg plugin is messy for a macOS dev using Travis ... &ndash;&gt;-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                        <version>1.7-SNAPSHOT</version>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>sign-artifacts</id>-->
-<!--                                <phase>verify</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>sign</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
-
                 </plugins>
             </build>
         </profile>
