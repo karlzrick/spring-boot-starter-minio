@@ -29,6 +29,7 @@
     <artifactId>spring-boot-starter-minio</artifactId>
 
     <properties>
+        <nexus.url>http://172.22.11.247:9080/repository</nexus.url>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <minio.version>8.5.5</minio.version>
@@ -81,14 +82,16 @@
     </scm>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>jdd-releases</id>
+            <name>jdd-releases</name>
+            <url>${nexus.url}/jdd-releases/</url>
         </repository>
+        <snapshotRepository>
+            <id>jdd-snapshots</id>
+            <name>jdd-snapshots</name>
+            <url>${nexus.url}/jdd-snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <dependencies>
@@ -137,23 +140,22 @@
         </dependency>
     </dependencies>
 
-    <!-- This is necessary because de gpg plugin is kind messy for a macOS dev using Travis ... -->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>apache.snapshots</id>
-            <url>http://repository.apache.org/snapshots/</url>
-        </pluginRepository>
-    </pluginRepositories>
+<!--    &lt;!&ndash; This is necessary because de gpg plugin is kind messy for a macOS dev using Travis ... &ndash;&gt;-->
+<!--    <pluginRepositories>-->
+<!--        <pluginRepository>-->
+<!--            <id>apache.snapshots</id>-->
+<!--            <url>http://repository.apache.org/snapshots/</url>-->
+<!--        </pluginRepository>-->
+<!--    </pluginRepositories>-->
 
     <profiles>
         <profile>
-            <id>ossrh</id>
+            <id>jdd-nexus</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -173,27 +175,27 @@
                         <version>1.6.8</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <serverId>jdd-nexus</serverId>
+                            <nexusUrl>http://172.22.11.247:9080/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
 
-                    <!-- This is necessary because gpg plugin is messy for a macOS dev using Travis ... -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.7-SNAPSHOT</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+<!--                    &lt;!&ndash; This is necessary because gpg plugin is messy for a macOS dev using Travis ... &ndash;&gt;-->
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                        <artifactId>maven-gpg-plugin</artifactId>-->
+<!--                        <version>1.7-SNAPSHOT</version>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>sign-artifacts</id>-->
+<!--                                <phase>verify</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>sign</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
 
                 </plugins>
             </build>
