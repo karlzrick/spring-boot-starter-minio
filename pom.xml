@@ -29,13 +29,13 @@
     <artifactId>spring-boot-starter-minio</artifactId>
 
     <properties>
-        <nexus.url>http://172.22.11.247:9080/repository</nexus.url>
+        <nexus.url>https://172.22.11.247:9080/repository</nexus.url>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <minio.version>8.5.5</minio.version>
     </properties>
 
-    <version>1.12.10</version>
+    <version>1.12.10-SNAPSHOT</version>
 
     <developers>
         <developer>
@@ -85,7 +85,7 @@
         <repository>
             <id>jdd-releases</id>
             <name>jdd-releases</name>
-            <url>${nexus.url}/jdd-releases/</url>
+            <url>${nexus.url}/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>jdd-snapshots</id>
