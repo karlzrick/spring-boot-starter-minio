@@ -18,6 +18,7 @@ package com.jlefebure.spring.boot.minio;
 
 
 import io.minio.*;
+import io.minio.http.Method;
 import io.minio.messages.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -150,6 +152,27 @@ public class MinioService {
                     .object(path.toString())
                     .build();
             return minioClient.getObject(args);
+        } catch (Exception e) {
+            throw new com.jlefebure.spring.boot.minio.MinioException("Error while fetching files in Minio", e);
+        }
+    }
+
+    /**
+     * Get an object expiry preview url from Minio
+     *
+     * @param path Path with prefix to the object. Object name must be included.
+     * @return The object expiry preview url
+     * @throws com.jlefebure.spring.boot.minio.MinioException if an error occur while fetch object
+     */
+    public String getPreviewUrl(Path path) throws com.jlefebure.spring.boot.minio.MinioException {
+        try {
+            GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+                    .method(Method.GET)
+                    .bucket(configurationProperties.getBucket())
+                    .object(path.toString())
+                    .expiry(configurationProperties.getExpiryTimeout().toSecondsPart(), TimeUnit.SECONDS)
+                    .build();
+            return minioClient.getPresignedObjectUrl(args);
         } catch (Exception e) {
             throw new com.jlefebure.spring.boot.minio.MinioException("Error while fetching files in Minio", e);
         }

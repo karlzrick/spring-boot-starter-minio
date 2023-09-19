@@ -54,6 +54,11 @@ public class MinioConfigurationProperties {
     private String metricName = "minio.storage";
 
     /**
+     * expiry the object url timeout for the Minio Client.
+     */
+    public Duration expiryTimeout = Duration.ofHours(2);
+
+    /**
      * Define the connect timeout for the Minio Client.
      */
     private Duration connectTimeout = Duration.ofSeconds(10);
@@ -79,6 +84,14 @@ public class MinioConfigurationProperties {
      * Will create the bucket if it do not exists on the Minio instance.
      */
     private boolean createBucket = true;
+
+    public Duration getExpiryTimeout() {
+        return expiryTimeout;
+    }
+
+    public void setExpiryTimeout(Duration expiryTimeout) {
+        this.expiryTimeout = expiryTimeout;
+    }
 
     public Duration getConnectTimeout() {
         return connectTimeout;
